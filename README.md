@@ -24,7 +24,7 @@ Features: create, edit, delete tasks, drag-and-drop reordering with priorities, 
 ## 🛠️ Tech Stack
 - **Backend:** Laravel 12 (PHP 8.4)
 - **Frontend:** Livewire 3.6, FluxUI 2.2 Free, TailwindCSS 4
-- **Database:** MySQL (default Laravel Sail service)
+- **Database:** Sqlite
 - **Drag & Drop:** SortableJS
 - **Build Tool:** Vite
 
