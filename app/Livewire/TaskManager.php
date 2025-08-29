@@ -81,10 +81,13 @@ class TaskManager extends Component
     {
         $query = Task::with('project');
 
-        $this->tasks = $query->when($this->filterProjectId, function ($q) {
-            return $q->where('project_id', $this->filterProjectId)
-                ->orderBy('priority');
-        }, fn($q) => $q->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
+        $this->tasks = $query->when(
+            $this->filterProjectId,
+            function ($q) {
+                return $q->where('project_id', $this->filterProjectId)
+                    ->orderBy('priority');
+            },
+            fn ($q) => $q->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
             ->orderByRaw('CASE WHEN tasks.project_id IS NULL THEN 1 ELSE 0 END')
             ->orderBy('projects.name')
             ->orderBy('tasks.priority')
@@ -287,8 +290,8 @@ class TaskManager extends Component
             DB::transaction(function () use ($projectId, $orderedIds) {
                 foreach ($orderedIds as $index => $taskId) {
                     Task::where('id', $taskId)
-                        ->when($projectId, fn($q) => $q->where('project_id', $projectId))
-                        ->when(is_null($projectId), fn($q) => $q->whereNull('project_id'))
+                        ->when($projectId, fn ($q) => $q->where('project_id', $projectId))
+                        ->when(is_null($projectId), fn ($q) => $q->whereNull('project_id'))
                         ->update(['priority' => $index + 1]);
                 }
             });
@@ -336,7 +339,7 @@ class TaskManager extends Component
     {
         return $this->filterProjectId
             ? collect([$this->filterProjectId => $this->tasks])
-            : $this->tasks->groupBy(fn($t) => $t->project_id);
+            : $this->tasks->groupBy(fn ($t) => $t->project_id);
     }
 
     /**
@@ -380,8 +383,8 @@ class TaskManager extends Component
      */
     private function getMaxPriorityForProject(?int $projectId): int
     {
-        return Task::when($projectId, fn($q) => $q->where('project_id', $projectId))
-            ->when(is_null($projectId), fn($q) => $q->whereNull('project_id'))
+        return Task::when($projectId, fn ($q) => $q->where('project_id', $projectId))
+            ->when(is_null($projectId), fn ($q) => $q->whereNull('project_id'))
             ->max('priority') ?? 0;
     }
 
