@@ -13,6 +13,7 @@
     @fluxAppearance
 </head>
 <body class="bg-gray-50 min-h-screen dark:bg-gray-900">
+<!-- Header -->
 <flux:header
     class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
     <!-- Left content -->
@@ -38,7 +39,8 @@
         <div class="hidden lg:block text-sm text-gray-500 dark:text-gray-400">
             Technical test done by:
             <a href="https://www.linkedin.com/in/devluism/" class="font-bold hover:underline" target="_blank">Luis
-                Zuñiga</a>
+                Zuñiga
+            </a>
         </div>
 
         <!-- Dark Mode Toggle -->
@@ -51,6 +53,30 @@
         </flux:button>
     </div>
 </flux:header>
+
+<!-- Main Content -->
+<flux:main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <livewire:task-manager/>
+</flux:main>
+
+<!-- Footer Content -->
+<flux:footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex justify-between items-center">
+            <!-- Left -->
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                &copy; {{ date('Y') }} Developed by: <a href="https://www.linkedin.com/in/devluism/"
+                                                        class="font-bold hover:underline" target="_blank">Luis Manuel
+                    Zuñiga Moreno
+                </a>
+            </div>
+            <!-- Right -->
+            <div class="text-sm text-gray-400 dark:text-gray-500">
+                Made with Laravel, Livewire & FluxUI
+            </div>
+        </div>
+    </div>
+</flux:footer>
 @livewireScripts
 @fluxScripts
 </body>
