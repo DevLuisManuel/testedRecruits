@@ -79,5 +79,35 @@
 </flux:footer>
 @livewireScripts
 @fluxScripts
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+    function initOneList(container) {
+        if (!container) return;
+        if (container.sortableInstance) container.sortableInstance.destroy();
+
+        const projectAttr = container.getAttribute('data-sortable-project');
+        const projectId = (projectAttr === 'null') ? null : Number(projectAttr);
+
+        container.sortableInstance = Sortable.create(container, {
+            animation: 150,
+            ghostClass: 'opacity-50',
+            dragClass: 'shadow-lg',
+            handle: '.task-item',
+            onEnd() {
+                const ids = Array.from(container.children).map(el => Number(el.getAttribute('data-id')));
+                const lw = Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id'));
+                lw.call('updateTaskOrder', projectId, ids);
+            }
+        });
+    }
+
+    function initializeSortable() {
+        document.querySelectorAll('[data-sortable-project]').forEach(initOneList);
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeSortable);
+    document.addEventListener('livewire:navigated', initializeSortable);
+    document.addEventListener('livewire:updated', () => setTimeout(initializeSortable, 100));
+</script>
 </body>
 </html>
